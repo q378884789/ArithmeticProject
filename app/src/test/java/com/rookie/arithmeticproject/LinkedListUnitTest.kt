@@ -48,19 +48,14 @@ class LinkedListUnitTest {
 
         while (onePosition < oneSize || twoPosition < twoSize) {
             var tmpNode: ListNode? = null
-            if (oneSize == onePosition) {
+            if (oneSize == onePosition || oneSource[onePosition].value!! > twoSource[twoPosition].value!!) {
                 tmpNode = twoSource[twoPosition]
                 twoPosition++
-            } else if (twoSize == twoPosition) {
-                tmpNode = oneSource[onePosition]
-                onePosition++
-            } else if (oneSource[onePosition].value!! > twoSource[twoPosition].value!!) {
-                tmpNode = twoSource[twoPosition]
-                twoPosition++
-            } else if (oneSource[onePosition].value!! <= twoSource[twoPosition].value!!) {
+            } else if (twoSize == twoPosition || oneSource[onePosition].value!! <= twoSource[twoPosition].value!!) {
                 tmpNode = oneSource[onePosition]
                 onePosition++
             }
+
             if (head == null) {
                 head = tmpNode
             }
@@ -137,7 +132,7 @@ class LinkedListUnitTest {
     private fun printListNode(head: ListNode) {
         var curr: ListNode? = head;
         do {
-            print(curr!!.value.toString() + "->")
+            print(curr!!.value.toString() + "-> ")
             curr = curr.next
 
         } while (curr != null)
