@@ -2,6 +2,17 @@ package com.rookie.arithmeticproject
 
 import org.junit.Test
 
+/**
+ * 描叙： 将链表进行升序排列
+ * 链表规则： 基数节点升序排列，偶数节点降序排列，如下：
+ * 1->11->2->10->3->9->4->8->5->7->6->6->7->5->8->4
+ *
+ * 思想以及步骤：
+ *  a、先使用构建数组，对链表进行初始化
+ *  b、对基数部分，与偶数部分链表进行拆分为2个arrayList
+ *  c、对偶数部分进行升序排列
+ *  d、重新合并2个ArrayList，生成新的LinkList
+ */
 class LinkedListUnitTest {
 
     @Test
@@ -85,16 +96,16 @@ class LinkedListUnitTest {
         val desListNodes: ArrayList<ListNode> = ArrayList()
 
         var position: Int = 1
-        var currListNode: ListNode = head
+        var currListNode: ListNode? = head
         do {
             if (position % 2 == 0) {
-                desListNodes.add(currListNode)
+                desListNodes.add(currListNode!!)
             } else {
-                ascListNodes.add(currListNode)
+                ascListNodes.add(currListNode!!)
             }
             position++
-            currListNode = currListNode.next!!
-        } while (currListNode.next != null)
+            currListNode = currListNode.next
+        } while (currListNode != null)
 
         return arrayOf(ascListNodes, desListNodes)
     }
@@ -126,7 +137,7 @@ class LinkedListUnitTest {
     private fun printListNode(head: ListNode) {
         var curr: ListNode? = head;
         do {
-            print(curr!!.value.toString() + " ")
+            print(curr!!.value.toString() + "->")
             curr = curr.next
 
         } while (curr != null)
