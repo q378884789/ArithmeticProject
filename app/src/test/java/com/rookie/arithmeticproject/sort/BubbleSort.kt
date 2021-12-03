@@ -6,12 +6,12 @@ import org.junit.Test
  * @description 冒泡排序
  * 两两比较，大的右移，比出最大的，然后重新开始比
  */
-class BubbleSort {
+class BubbleSort : BaseSort() {
 
     @Test
     fun testBubbleSort() {
 
-        var source = intArrayOf(100, 1, 10, 11, 2, 3, 4, 9, 4, 2, 5, 1)
+        var source = getSourceData()
 
         val bubbleSort = bubbleSort(source)
 
@@ -40,15 +40,9 @@ class BubbleSort {
             if (flag) {
                 break;
             }
-
         }
         return source
     }
 
-    private fun printValue(source: IntArray) {
-        for (value in source) {
-            print("$value ")
-        }
-    }
 
 }
