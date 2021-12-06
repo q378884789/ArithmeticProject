@@ -30,6 +30,27 @@ class SelectSort : BaseSort() {
      */
     private fun selectSort(source: IntArray) : IntArray{
 
+        // 注意项： for循环的遍历方向，决定了是先选大的还是先选小的
+        // 这里从小到大排序，优先选小的开始，否则后面逻辑会较为复杂
+        for (index in source.indices) {
+
+            var min = index
+            // 找出最小数字，并保存
+            // 1、由于签名index都是已经排序好的数字，所以可以提前过滤掉
+            for ( i in index + 1 until source.size) {
+                if (source[min] > source[i]) {
+                    min = i
+                }
+            }
+
+            // 2、交换值
+            if (min != index) {
+                val tmp = source[min]
+                source[min] = source[index]
+                source[index] = tmp
+            }
+        }
+
         return source
     }
 

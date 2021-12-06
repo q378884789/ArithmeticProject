@@ -9,7 +9,7 @@ abstract class BaseSort {
      * 初始化数据，并打印原始内容
      */
     fun getSourceData() : IntArray {
-        val source = intArrayOf(100, 1, 10, 11, 2, 3, 4, 9, 4, 2, 5, 1, 99, 101, 15)
+        val source = intArrayOf(100, 22, 10, 11, 27, 3, 55, 9, 4, 2, 5, 1, 99, 101, 15)
         print("原始数据： ")
         printValue(source)
         return source
