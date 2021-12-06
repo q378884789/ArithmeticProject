@@ -19,13 +19,13 @@ class BubbleSort : BaseSort() {
 
         // 冒牌排序练习
         println("下面是练习结果")
-        printValue(exerciseBubbleSort(source))
+        printValue(exercise(source))
     }
 
     // 练习冒泡排序的 : 可删除练习
-    private fun exerciseBubbleSort(source: IntArray): IntArray {
+    private fun exercise(source: IntArray): IntArray {
 
-        for (index in source.indices) {
+        for (index in 1 until source.size) {
             var flag = true
 
             for (i in 0 until source.size - index) {

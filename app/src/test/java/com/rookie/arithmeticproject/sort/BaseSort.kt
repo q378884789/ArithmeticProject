@@ -3,7 +3,7 @@ package com.rookie.arithmeticproject.sort
 /*
 * 数组排序的基类
  */
-open class BaseSort {
+abstract class BaseSort {
 
     /**
      * 初始化数据，并打印原始内容
