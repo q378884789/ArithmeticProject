@@ -9,11 +9,11 @@ import org.junit.Test
  *  2、再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。
  *  3、重复第二步，直到所有元素均排序完毕。
  */
-class SelectSort {
+class SelectSort : BaseSort() {
 
     @Test
     fun testSelectSort() {
-
+        val sourceData = getSourceData()
     }
 
     private fun selectSort() {
