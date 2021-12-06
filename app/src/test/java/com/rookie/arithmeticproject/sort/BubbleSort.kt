@@ -23,7 +23,7 @@ class BubbleSort : BaseSort() {
     }
 
     // 练习冒泡排序的 : 可删除练习
-    private fun exercise(source: IntArray): IntArray {
+    override fun exercise(source: IntArray): IntArray {
 
         for (index in 1 until source.size) {
             var flag = true

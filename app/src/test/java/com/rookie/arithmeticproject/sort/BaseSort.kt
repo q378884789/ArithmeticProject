@@ -26,4 +26,6 @@ abstract class BaseSort {
         // 增加换行
         println()
     }
+
+    abstract fun exercise(source: IntArray) : IntArray
 }

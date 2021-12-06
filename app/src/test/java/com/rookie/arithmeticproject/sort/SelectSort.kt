@@ -14,10 +14,25 @@ class SelectSort : BaseSort() {
     @Test
     fun testSelectSort() {
         val sourceData = getSourceData()
+        print("选择排序： ")
+        printValue(selectSort(sourceData))
+
+        print("练习结果")
+
     }
 
-    private fun selectSort() {
-
+    override fun exercise(source: IntArray): IntArray {
+        TODO("Not yet implemented")
     }
+
+    /**
+     * 选择排序
+     */
+    private fun selectSort(source: IntArray) : IntArray{
+
+        return source
+    }
+
+
 
 }
