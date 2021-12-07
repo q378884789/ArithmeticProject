@@ -1,11 +1,12 @@
 package com.rookie.arithmeticproject.sort
 
 import org.junit.Test
-import java.util.*
 
 
 /**
  * @description 快速排序
+ * 核心思想： 快速排序的核心就是如何找到目标值所在的位置即可
+ *
  * 快速排序使用分治法（Divide and conquer）策略来把一个串行（list）分为两个子串行（sub-lists）。
  * 快速排序又是一种分而治之思想在排序算法上的典型应用。本质上来看，快速排序应该算是在冒泡排序基础上的递归分治
  *
@@ -31,11 +32,45 @@ class QuickSort : BaseSort() {
     }
 
     private fun exerciseSort(source: IntArray, begin: Int, end: Int): IntArray? {
+        if (begin < end) {
+            // 基准值
+            var key = source[begin]
+            var i = begin
+            var j = end
 
+            while (i < j) {
+
+                // 由于是以第一个为基准，所以从end开始查找
+                while (i < j && source[j] > key) {
+                    j--
+                }
+                // 如果退出了上面的while表示遇到了比key小的值，需要进行交换，
+                if (i < j) {
+                    swap(source, i, j)
+                    i++
+                }
+
+                // 开始从起始位置遍历，找到比key大的值
+                while (i < j && source[i] < key) {
+                    i++
+                }
+
+                if (i < j) {
+                    swap(source, i, j)
+                    j--
+                }
+
+            }
+
+            source[i] = key  // 也可以写成source[j]=key
+            // 递归调用，可以去掉i，因为i已经排好序了
+            exerciseSort(source, 0, i -1)
+            exerciseSort(source, i + 1, end)
+        }
         return source
     }
 
-    /**
+    /** -----------------------------------------分割线----------------------------------------
      * 例子：
      * 快速排序
      */
