@@ -1,4 +1,4 @@
-package com.rookie.arithmeticproject
+package com.rookie.arithmeticproject.linkedList
 
 import org.junit.Test
 
