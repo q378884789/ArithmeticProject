@@ -53,7 +53,8 @@ class BubbleSort : BaseSort() {
      * 1、两两比较，较大的往前移动
      * 2、如果未发生变化，表示顺序已经正确，无需在进行遍历
      */
-    private fun bubbleSort(source: IntArray): IntArray {
+    private fun bubbleSort(src: IntArray): IntArray {
+        val source = src.copyOf(src.size)
 
         for (index in 1 until source.size) {
             // 设定一个标记，若为true，则表示此次循环没有进行交换，也就是待排序列已经有序，排序已经完成。

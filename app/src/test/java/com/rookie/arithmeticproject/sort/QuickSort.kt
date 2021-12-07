@@ -1,6 +1,8 @@
 package com.rookie.arithmeticproject.sort
 
 import org.junit.Test
+import java.util.*
+
 
 /**
  * @description 快速排序
@@ -17,10 +19,20 @@ class QuickSort : BaseSort() {
         // 进行快速排序并且打印
         print("排序结果： ")
         printValue(quickSort(sourceData))
+
+        print("练习结果： ")
+        printValue(exercise(sourceData))
+
     }
 
     override fun exercise(source: IntArray): IntArray {
-        TODO("Not yet implemented")
+        val exerciseSort = exerciseSort(source, 0, source.size - 1)
+        return exerciseSort!!
+    }
+
+    private fun exerciseSort(source: IntArray, begin: Int, end: Int): IntArray? {
+
+        return source
     }
 
     /**
@@ -28,8 +40,69 @@ class QuickSort : BaseSort() {
      * 快速排序
      */
     private fun quickSort(source: IntArray): IntArray {
+        val copySource = source.copyOf(source.size)
 
+        val quickSort = quickSort(copySource, 0, copySource.size - 1)
+        return quickSort!!
+    }
+
+    private fun quickSort(source: IntArray, begin: Int, end: Int): IntArray? {
+        if (begin < end) {
+            val key: Int = source[begin]
+            var i: Int = begin
+            var j: Int = end
+            while (i < j) {
+                while (i < j && source[j] > key) {
+                    j--
+                }
+                if (i < j) {
+                    source[i] = source[j]
+                    i++
+                }
+                while (i < j && source[i] < key) {
+                    i++
+                }
+                if (i < j) {
+                    source[j] = source[i]
+                    j--
+                }
+            }
+            source[i] = key
+            quickSort(source, begin, i - 1)
+            quickSort(source, i + 1, end)
+        }
         return source
+    }
+
+    /**
+     * ----------------------------------简便方法-------------------------------------
+     * 分割线， 下面是简便方法，与传统的优点区别
+     * 核心思想是找到目标所在的位置。然后交换，最后进行递归，直到只有一个元素
+     */
+    private fun quickSort_bak(arr: IntArray, left: Int, right: Int): IntArray? {
+        if (left < right) {
+            val partitionIndex = partition(arr, left, right)
+            quickSort_bak(arr, left, partitionIndex - 1)
+            quickSort_bak(arr, partitionIndex + 1, right)
+        }
+        return arr
+    }
+
+    // 目标值为： source[left]
+    private fun partition(source: IntArray, left: Int, right: Int): Int {
+
+        var index = left + 1
+        // 所有比 source[left] 小的放到index位置
+        for (i in index..right) {
+            if (source[i] < source[left]) {
+                swap(source, i, index)
+                index++
+            }
+        }
+        // 交换left与最后一个index的位置，
+        // 目的： 这样就把所有的小于source[left]的值放到了左边，大于的则在右边了，这样就确定了目标值的位置
+        swap(source, left, index - 1)
+        return index - 1
     }
 
 

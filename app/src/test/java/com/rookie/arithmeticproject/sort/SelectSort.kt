@@ -17,19 +17,34 @@ class SelectSort : BaseSort() {
         print("选择排序： ")
         printValue(selectSort(sourceData))
 
-        print("练习结果")
-
+        print("练习结果: ")
+        printValue(exercise(sourceData))
     }
 
     override fun exercise(source: IntArray): IntArray {
-        TODO("Not yet implemented")
+
+        for (index in source.indices) {
+
+            var min = index
+            for (i in (index + 1) until source.size) {
+                if (source[min] > source[i]) {
+                    min = i
+                }
+            }
+
+            if (index != min) {
+                swap(source, min, index)
+            }
+        }
+
+        return source
     }
 
     /**
      * 选择排序
      */
-    private fun selectSort(source: IntArray) : IntArray{
-
+    private fun selectSort(src: IntArray) : IntArray{
+        val source = src.copyOf()
         // 注意项： for循环的遍历方向，决定了是先选大的还是先选小的
         // 这里从小到大排序，优先选小的开始，否则后面逻辑会较为复杂
         for (index in source.indices) {
