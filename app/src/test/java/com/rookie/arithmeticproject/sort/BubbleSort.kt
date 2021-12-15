@@ -25,24 +25,21 @@ class BubbleSort : BaseSort() {
     // 练习冒泡排序的 : 可删除练习
     override fun exercise(source: IntArray): IntArray {
 
-        for (index in 1 until source.size) {
+        for (index in source.indices) {
             var flag = true
 
-            for (i in 0 until source.size - index) {
+            for (i in 0 until source.size - index -1) {
                 if (source[i] > source[i + 1]) {
-                    // 交换位置
-
-                    val tmp = source[i + 1]
-                    source[i + 1] = source[i]
-                    source[i] = tmp
+                    swap(source, i, i+1)
                     flag = false
                 }
             }
 
-            if (flag) {
+            if(flag) {
                 break
             }
         }
+
         return source
     }
 
