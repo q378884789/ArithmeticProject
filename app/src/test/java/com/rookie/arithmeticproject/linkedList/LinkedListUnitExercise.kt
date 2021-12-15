@@ -4,145 +4,149 @@ import org.junit.Test
 
 /**
  * 此类用于练习使用，对链表进行重新排序
+ * 练习时间： 20211.12.15
  */
 class LinkedListUnitExercise {
 
     @Test
     fun sortLinkedList() {
-        // 初始化链表数据
-        val sourceLinkedList = initLinkedList()
+        val head = initLinkedList()
 
-        sourceLinkedList?.let {
-            // 打印数据
-            printListNode(it)
+        head?.let {
+            printLinked(it)
 
-            // 拆分链表
-            val spiltLinkedList: Array<ArrayList<ListNode>> = spiltLinkedList(it)
+            // 将链表进行拆分
+            val splitLinked: Array<ArrayList<LinkedNode>> = splitLinked(it)
 
-            // 重新排序列表
-            val reversalList = reversalList(spiltLinkedList[1])
+            // 反转链表
+            val reversalNodes = reversalNodes(splitLinked[1])
 
-            // 合并，生成新的List
-            val mergeList = mergeList(spiltLinkedList[0], reversalList)
-            mergeList?.let { it1 -> printListNode(it1) }
+            val mergeListNodes = mergeListNodes(splitLinked[0], reversalNodes)
+            printLinked(mergeListNodes)
+
         }
 
     }
 
-    private fun mergeList(oneSource: ArrayList<ListNode>, twoSource: ArrayList<ListNode>): ListNode? {
-        val oneSize = oneSource.size
-        val twoSize = twoSource.size
+    // 合并2个链表
+    private fun mergeListNodes(left: ArrayList<LinkedNode>, right: ArrayList<LinkedNode>): LinkedNode {
 
-        var onePosition = 0
-        var twoPosition = 0
-        var curr: ListNode? = null
-        var head: ListNode? = null
+        var leftPosition: Int = 0
+        var rightPosition: Int = 0
 
-        while (onePosition < oneSize || twoPosition < twoSize) {
-            var tmpNode: ListNode? = null
-            if (oneSize == onePosition || oneSource[onePosition].value!! > twoSource[twoPosition].value!!) {
-                tmpNode = twoSource[twoPosition]
-                twoPosition++
-            } else if (twoSize == twoPosition || oneSource[onePosition].value!! <= twoSource[twoPosition].value!!) {
-                tmpNode = oneSource[onePosition]
-                onePosition++
+        var currNode: LinkedNode? = null
+        var headNode: LinkedNode? = null
+
+        while (leftPosition < left.size || rightPosition < right.size) {
+            var tmp: LinkedNode? = null
+            when {
+                leftPosition == left.size -> {
+                    tmp = right[rightPosition]
+                    rightPosition++
+                }
+                rightPosition == right.size -> {
+                    tmp = left[leftPosition]
+                    leftPosition++
+                }
+                left[leftPosition].value!! > right[rightPosition].value!! -> {
+                    tmp = right[rightPosition]
+                    rightPosition++
+                }
+                left[leftPosition].value!! <= right[rightPosition].value!! -> {
+                    tmp = left[leftPosition]
+                    leftPosition++
+                }
             }
 
-            if (head == null) {
-                head = tmpNode
+            tmp?.let {
+                // 需要将it.next = null否则会导致链表混乱
+                it.next = null
+                currNode?.next = it
+                currNode = it
             }
-            curr?.next = tmpNode
-            curr = tmpNode
-            // 需要赋null，避免之前的数据产生混乱
-            curr?.next = null
+
+            // 赋值头结点
+            if (headNode == null) {
+                headNode = currNode
+            }
         }
-        return head
+        return headNode!!
     }
 
-    /**
-     * 反转数组
-     */
-    private fun reversalList(source: ArrayList<ListNode>): ArrayList<ListNode> {
-        val total = source.size
-        for ((index, value) in source.withIndex()) {
-            if (index >= total / 2) {
-                val reversalNodePosition = total - index - 1
-                var tmp = source[reversalNodePosition]
-                source[reversalNodePosition] = value
-                source[index] = tmp
+    // 反转链表
+    private fun reversalNodes(sourceNodes: ArrayList<LinkedNode>): ArrayList<LinkedNode> {
+        for ((index, value) in sourceNodes.withIndex()) {
+            if (index < sourceNodes.size / 2) {
+                val swapIndex = sourceNodes.size - index - 1
+                val tmp = sourceNodes[index]
+                sourceNodes[index] = sourceNodes[swapIndex]
+                sourceNodes[swapIndex] = tmp
             }
         }
-        return source
+        return sourceNodes
     }
 
-    /**
-     * 拆分链表,返回2个拆分后的数组
-     */
-    private fun spiltLinkedList(head: ListNode): Array<ArrayList<ListNode>> {
-        val ascListNodes: ArrayList<ListNode> = ArrayList()
-        val desListNodes: ArrayList<ListNode> = ArrayList()
+    // 拆分链表
+    private fun splitLinked(headNode: LinkedNode): Array<ArrayList<LinkedNode>> {
+        var ascNodes = ArrayList<LinkedNode>()
+        var descNodes = ArrayList<LinkedNode>()
 
-        var position: Int = 1
-        var currListNode: ListNode? = head
+        var currNode: LinkedNode? = headNode
+        var position = 1
         do {
-            if (position % 2 == 0) {
-                desListNodes.add(currListNode!!)
-            } else {
-                ascListNodes.add(currListNode!!)
+            currNode?.let {
+                if (position % 2 == 0) {
+                    descNodes.add(it)
+                } else {
+                    ascNodes.add(it)
+                }
             }
+
             position++
-            currListNode = currListNode.next
-        } while (currListNode != null)
-
-        return arrayOf(ascListNodes, desListNodes)
+            currNode = currNode!!.next
+        } while (currNode != null)
+        return arrayOf(ascNodes, descNodes)
     }
 
-    /**
-     * 构造条件，初始化数据
-     * @return 返回头结点数据
-     */
-    private fun initLinkedList(): ListNode? {
-        val sourceArray = intArrayOf(1, 11, 2, 10, 3, 9, 4, 8, 5, 7, 6, 6, 7, 5, 8, 4)
-        var head: ListNode? = null
-        var curr: ListNode? = null
+    private fun printLinked(source: LinkedNode) {
+        var currNode: LinkedNode? = source
+        do {
+            print("${currNode!!.value} ->")
+            currNode = currNode.next
+        } while (currNode != null)
+        println("")
+    }
 
-        for (source in sourceArray) {
-            val temp: ListNode = ListNode(source)
-            if (curr != null) {
-                curr.next = temp
-            }
-            curr = temp
+    // 初始化链表，基数升序，偶数降序的列表
+    private fun initLinkedList(): LinkedNode? {
+        val sourceArray = arrayOf(1, 11, 2, 10, 3, 9, 4, 8, 5, 7, 6, 6, 7, 5, 8, 4)
 
+        var head: LinkedNode? = null
+        var currNode: LinkedNode? = null
+
+        for (index in sourceArray.indices) {
+            val node = LinkedNode(sourceArray[index])
             if (head == null) {
-                head = curr
+                head = node
             }
+
+            if (currNode != null) {
+                currNode.next = node
+            }
+            currNode = node
         }
         return head
     }
 
-    // 打印链表信息
-    private fun printListNode(head: ListNode) {
-        var curr: ListNode? = head;
-        do {
-            print(curr!!.value.toString() + "-> ")
-            curr = curr.next
 
-        } while (curr != null)
-        // 打印换行符
-        println()
-    }
-
-    /**
-     * ListNode列表
-     */
-    class ListNode {
-
-        constructor(value: Int) {
-            this.value = value
-        }
+    class LinkedNode(value: Int) {
 
         var value: Int? = 0
-        var next: ListNode? = null
+        var next: LinkedNode? = null
+
+        init {
+            this.value = value
+        }
 
     }
 
