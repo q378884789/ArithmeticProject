@@ -64,7 +64,7 @@ class QuickSort : BaseSort() {
 
             source[i] = key  // 也可以写成source[j]=key
             // 递归调用，可以去掉i，因为i已经排好序了
-            exerciseSort(source, 0, i -1)
+            exerciseSort(source, 0, i - 1)
             exerciseSort(source, i + 1, end)
         }
         return source
