@@ -27,45 +27,37 @@ class QuickSort : BaseSort() {
     }
 
     override fun exercise(source: IntArray): IntArray {
-        val exerciseSort = exerciseSort(source, 0, source.size - 1)
-        return exerciseSort!!
+        //TODO 练习使用
+        return exerciseQuickSort(source, 0, source.size - 1)
     }
 
-    private fun exerciseSort(source: IntArray, begin: Int, end: Int): IntArray? {
-        if (begin < end) {
-            // 基准值
-            var key = source[begin]
-            var i = begin
-            var j = end
-
-            while (i < j) {
-
-                // 由于是以第一个为基准，所以从end开始查找
-                while (i < j && source[j] > key) {
-                    j--
-                }
-                // 如果退出了上面的while表示遇到了比key小的值，需要进行交换，
-                if (i < j) {
-                    swap(source, i, j)
-                    i++
-                }
-
-                // 开始从起始位置遍历，找到比key大的值
-                while (i < j && source[i] < key) {
-                    i++
-                }
-
-                if (i < j) {
-                    swap(source, i, j)
-                    j--
-                }
-
+    // 练习快速排序
+    private fun exerciseQuickSort(source: IntArray, start: Int, end: Int): IntArray {
+        var flag: Int = source[start]
+        var i = start
+        var j = end
+        while (i < j) {
+            while (i < j && flag < source[j]) {
+                j--
             }
 
-            source[i] = key  // 也可以写成source[j]=key
-            // 递归调用，可以去掉i，因为i已经排好序了
-            exerciseSort(source, 0, i - 1)
-            exerciseSort(source, i + 1, end)
+            if (i < j) {
+                source[i] = source[j]
+                i++
+            }
+
+            while (i < j && flag > source[i]) {
+                i++
+            }
+
+            if (i < j) {
+                source[j] = source[i]
+                j--
+            }
+
+            source[i] = flag
+            exerciseQuickSort(source, start, i - 1)
+            exerciseQuickSort(source, i + 1, end)
         }
         return source
     }
